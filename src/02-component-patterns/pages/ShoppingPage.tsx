@@ -5,6 +5,8 @@ import {
   ProductTitle,
 } from "../components/";
 
+import "../styles/custom-styles.css";
+
 const product = {
   id: "1",
   title: "Coffe Mug - Card",
@@ -24,12 +26,13 @@ export const ShoppingPage = () => {
           gap: 5,
         }}
       >
-        {/* <ProductCard product={product}>
-          <ProductCard.Image />
-          <ProductCard.Title />
-          <ProductCard.Buttons />
-        </ProductCard> */}
-        <ProductCard product={product}>
+        <ProductCard product={product} className="bg-dark text-white">
+          <ProductCard.Image className="custom-image" />
+          <ProductCard.Title className=" text-bold" />
+          <ProductCard.Buttons className="custom-buttons" />
+        </ProductCard>
+
+        <ProductCard product={product} style={{ backgroundColor: "#78D1F8" }}>
           <ProductImage />
           <ProductTitle />
           <ProductButtons />
