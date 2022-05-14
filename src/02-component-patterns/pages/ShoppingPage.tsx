@@ -1,19 +1,11 @@
-import {
-  ProductButtons,
-  ProductCard,
-  ProductImage,
-  ProductTitle,
-} from "../components/";
-
+import { ProductCard } from "../components/";
+import { products } from "../data/products";
 import "../styles/custom-styles.css";
-
-const product = {
-  id: "1",
-  title: "Coffe Mug - Card",
-  img: "src/02-component-patterns/assets/coffee-mug.png",
-};
+import { useShoppingCart } from "../hooks/useShoppingCart";
 
 export const ShoppingPage = () => {
+  const { shoppingCart, onProductCountChange } = useShoppingCart();
+
   return (
     <div>
       <h1>Shopping store</h1>
@@ -26,17 +18,37 @@ export const ShoppingPage = () => {
           gap: 5,
         }}
       >
-        <ProductCard product={product} className="bg-dark text-white">
-          <ProductCard.Image className="custom-image" />
-          <ProductCard.Title className=" text-bold" />
-          <ProductCard.Buttons className="custom-buttons" />
-        </ProductCard>
+        {products.map((product) => {
+          return (
+            <ProductCard
+              key={product.id}
+              product={product}
+              className="bg-dark text-white"
+              onChange={onProductCountChange}
+              value={shoppingCart?.[product.id]?.count || 0}
+            >
+              <ProductCard.Image className="custom-image" />
+              <ProductCard.Title className=" text-bold" />
+              <ProductCard.Buttons className="custom-buttons" />
+            </ProductCard>
+          );
+        })}
+      </div>
 
-        <ProductCard product={product} style={{ backgroundColor: "#78D1F8" }}>
-          <ProductImage />
-          <ProductTitle />
-          <ProductButtons />
-        </ProductCard>
+      <div className="shopping-cart">
+        {Object.values({ ...shoppingCart }).map((product) => (
+          <ProductCard
+            key={product.id}
+            product={product}
+            className="bg-dark text-white"
+            onChange={onProductCountChange}
+            style={{ width: "100px" }}
+            value={product.count}
+          >
+            <ProductCard.Image className="custom-image" />
+            <ProductCard.Buttons className="custom-buttons" />
+          </ProductCard>
+        ))}
       </div>
     </div>
   );
